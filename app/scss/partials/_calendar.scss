@@ -1,0 +1,75 @@
+#calendar {
+  @include grid-column(12);
+
+  .calendar-nav {
+    text-align: center;
+  }
+  .calendar-nav-today {
+    @include grid-column(12);
+  }
+
+  .calendar-type {
+    @include grid-column(12);
+    text-align: center;
+
+    .switch {
+      @include switch;
+      @include switch-size($switch-height-sml);
+      label { @include radius(4px); }
+      label:after { @include radius(3px); }
+
+      display: block;
+      @media #{$medium-up} {
+        display: inline-block;
+      }
+      font-size: rem-calc(11);
+      margin: 0 1rem;
+      text-align: center;
+
+      label {
+        margin-left: auto !important;
+        margin-right: auto !important;
+        overflow: hidden;
+      }
+    }
+
+    @media #{$medium-up} {
+      .calendar-type-summary {
+        display: none;
+      }
+
+      form {
+        display: block !important;
+      }
+    }
+  }
+
+  table {
+    @include grid-column(12);
+    table-layout: fixed;
+    padding: 0;
+
+    td {
+      background: $calendar-out;
+      text-align: center;
+      vertical-align: middle;
+
+      &.monthName {
+        background: none;
+        text-align: left;
+      }
+
+      &.blue {
+        background: $blue;
+        color: $white;
+      }
+      &.white {
+        background: #FFF;
+      }
+      &.red {
+        background: $red;
+        color: $white;
+      }
+    }
+  }
+}

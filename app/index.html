@@ -1,0 +1,101 @@
+<!doctype html>
+<html class="no-js" lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tempo Admin</title>
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css(.tmp) css/app.css -->
+    <link rel="stylesheet" href="css/app.css">
+    <!-- endbuild -->
+  </head>
+  <body ng-app="tempoApp">
+    <div ng-controller="MainCtrl">
+      <div class="row row-no-margin">
+        <div id="site-title" class="">
+          <h1>EDF Tempo - EJP</h1>
+          <h2 class="h6">La couleur du jour de votre abonnement EDF Tempo et EJP, et celle du lendemain, tous les jours, dès 17h.</h2>
+        </div>
+      </div>
+
+      <div class="row">
+        <div id="calendar">
+          <h2 class="h6"><i class="icon-calendar"></i>Calendrier</h2>
+
+          <div class="calendar-nav">
+            <h3>
+              <a href ng-click="changeYear(previousYear)"><i class="icon-left"></i></a>
+              <span>{{ calendarDate.format('YYYY') }}</span>
+              <a href ng-click="changeYear(nextYear)"><i class="icon-right"></i></a>
+            </h3>
+            <h4 class="h6 calendar-nav-today">
+              <a href ng-click="changeYear(today)" ng-show="today.format('YYYYMM') != calendarDate.format('YYYYMM')">Revenir à aujourd'hui</a>
+              <span ng-hide="today.format('YYYYMM') != calendarDate.format('YYYYMM')">&nbsp;</span>
+            </h4>
+          </div>
+          <div class="calendar-type">
+            <h4 class="calendar-type-summary" ng-click="onCalendarTypeClick()">{{ calendarTypeFormat(calendarType) }} <i class="icon-cog"></i></h4>
+            <form ng-show="showCalendarType">
+              <div class="switch">
+                Tempo
+                <input id="calendar-type-ejp-tempo" type="radio" name="calendar-type" ng-model="calendarType" ng-change="onCalendarTypeChange()" value="tempo">
+                <label for="calendar-type-ejp-tempo">Tempo</label>
+              </div>
+              <div class="switch">
+                EJP Nord
+                <input id="calendar-type-ejp-north" type="radio" name="calendar-type" ng-model="calendarType" ng-change="onCalendarTypeChange()" value="ejp-north">
+                <label for="calendar-type-ejp-north">EJP Nord</label>
+              </div>
+              <div class="switch">
+                EJP PACA
+                <input id="calendar-type-ejp-paca" type="radio" name="calendar-type" ng-model="calendarType" ng-change="onCalendarTypeChange()" value="ejp-paca">
+                <label for="calendar-type-ejp-paca">EJP PACA</label>
+              </div>
+              <div class="switch">
+                EJP Ouest
+                <input id="calendar-type-ejp-west" type="radio" name="calendar-type" ng-model="calendarType" ng-change="onCalendarTypeChange()" value="ejp-west">
+                <label for="calendar-type-ejp-west">EJP Ouest</label>
+              </div>
+              <div class="switch">
+                EJP Sud
+                <input id="calendar-type-ejp-south" type="radio" name="calendar-type" ng-model="calendarType" ng-change="onCalendarTypeChange()" value="ejp-south">
+                <label for="calendar-type-ejp-south">EJP Sud</label>
+              </div>
+            </form>
+          </div>
+
+          <calendar ng-model="calendarEvents" date="calendarDate" ng-click="onDayClick"></calendar>
+        </div>
+      </div>
+    </div>
+
+    <!-- build:js(.) js/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/modernizr/modernizr.js"></script>
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/fastclick/lib/fastclick.js"></script>
+    <script src="bower_components/jquery.cookie/jquery.cookie.js"></script>
+    <script src="bower_components/jquery-placeholder/jquery.placeholder.js"></script>
+    <script src="bower_components/foundation/js/foundation.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/moment/moment.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- build:js({.tmp,app}) js/scripts.js -->
+    <script src="js/moment.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/controllers/main.js"></script>
+    <script src="js/directives/calendar.js"></script>
+    <script src="js/services/tempo.js"></script>
+    <script src="js/services/ejp.js"></script>
+    <script src="js/services/forecast.js"></script>
+    <!-- endbuild -->
+
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  </body>
+</html>
