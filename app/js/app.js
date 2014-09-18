@@ -2,17 +2,20 @@
 
 /**
  * @ngdoc overview
- * @name tempoApp
+ * @name tempoAdminApp
  * @description
- * # tempoApp
+ * # tempoAdminApp
  *
  * Main module of the application.
  */
 angular
-  .module('tempoApp', [
+  .module('tempoAdminApp', [
     'ngRoute',
     'ngSanitize',
-    'ngTouch'
+    'ngTouch',
+    'divonaEjp',
+    'divonaForecast',
+    'divonaTempo'
   ])
   .config(['$httpProvider', function ($httpProvider) {
     //Reset headers to avoid OPTIONS request (aka preflight)
@@ -20,4 +23,22 @@ angular
     $httpProvider.defaults.headers.post = {};
     $httpProvider.defaults.headers.put = {};
     $httpProvider.defaults.headers.patch = {};
+  }])
+  .config(['$routeProvider', function($routeProvider) {
+    $routeProvider.
+      when('/home', {
+        templateUrl: 'partials/home.html',
+        controller: 'HomeCtrl'
+      }).
+      when('/tempo', {
+        templateUrl: 'partials/tempo.html',
+        controller: 'TempoCtrl'
+      }).
+      when('/ejp', {
+        templateUrl: 'partials/ejp.html',
+        controller: 'EjpCtrl'
+      }).
+      otherwise({
+        redirectTo: '/home'
+      });
   }]);

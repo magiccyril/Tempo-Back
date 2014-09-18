@@ -2,12 +2,13 @@
 
 /**
  * @ngdoc service
- * @name tempoApp.tempo
+ * @name divonaTempo.tempo
  * @description
  * # tempo
- * Factory in the tempoApp.
+ * Factory in the divonaTempo.
  */
-angular.module('tempoApp')
+angular
+  .module('divonaTempo', [])
   .constant('TEMPO_API_URL', 'http://api.tempo.18ruedivona.eu')
   .constant('TEMPO_API_FROM_MONTH', 9)
   .constant('TEMPO_API_FROM_DAY', 1)

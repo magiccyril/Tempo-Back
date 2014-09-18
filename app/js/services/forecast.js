@@ -2,12 +2,13 @@
 
 /**
  * @ngdoc service
- * @name tempoApp.forecast
+ * @name divonaForecast.forecast
  * @description
  * # tempo
- * Factory in the tempoApp.
+ * Factory in the divonaForecast.
  */
-angular.module('tempoApp')
+angular
+  .module('divonaForecast', [])
   .constant('FORECAST_API_URL', 'http://411279a3a8.url-de-test.ws')
   .factory('Forecast', ['$http', '$q', 'FORECAST_API_URL',
     function ($http, $q, FORECAST_API_URL) {

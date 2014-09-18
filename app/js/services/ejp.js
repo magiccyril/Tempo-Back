@@ -2,12 +2,13 @@
 
 /**
  * @ngdoc service
- * @name tempoApp.tempo
+ * @name divonaEjp.tempo
  * @description
  * # tempo
- * Factory in the tempoApp.
+ * Factory in the divonaEjp.
  */
-angular.module('tempoApp')
+angular
+  .module('divonaEjp', [])
   .constant('EJP_API_URL', 'http://api.tempo.18ruedivona.eu')
   .constant('EJP_API_FROM_MONTH', 10)
   .constant('EJP_API_FROM_DAY', 1)
@@ -45,28 +46,30 @@ angular.module('tempoApp')
       var formatData = function (response) {
         var data = response.data;
 
+        var formatObject = function (value, dayzone) {
+          if (!formatedData[dayzone]) {
+            formatedData[dayzone] = {};
+          }
+
+          var raw = value;
+          var format = value ? 'EJP' : 'Non EJP';
+
+          formatedData[dayzone][dayDate.format('YYYY-MM-DD')] = {
+            'raw': raw,
+            'formated': format
+          };
+        };
+
         var formatedData = {};
         for (var i = 0; i < data.length; i++) {
           var day = data[i];
           var dayDate = moment(day.date.year + '-' + day.date.month + '-' + day.date.day, 'YYYY-M-D');
 
-          angular.forEach(day.zones, function(value, dayzone) {
-            if (!formatedData[dayzone]) {
-              formatedData[dayzone] = {};
-            }
-
-            var raw = value ? 'red' : 'white';
-            var format = value ? 'EJP' : '';
-
-            formatedData[dayzone][dayDate.format('YYYY-MM-DD')] = {
-              'raw': raw,
-              'formated': format
-            };
-          });
+          angular.forEach(day.zones, formatObject);
         }
 
         return formatedData;
-      }
+      };
 
       var fetch = function (zone, date) {
         if (cache[date] && cache[date][zone]) {
@@ -83,7 +86,7 @@ angular.module('tempoApp')
               return formatedData[zone];
             });
         }
-      }
+      };
 
 
       var save = function (apikey, date, zones) {
@@ -91,11 +94,7 @@ angular.module('tempoApp')
           return $q.reject('Invalid date');
         }
 
-        var zonesValid = 'object' === typeof zones
-          && 'boolean' === typeof zones.north
-          && 'boolean' === typeof zones.paca
-          && 'boolean' === typeof zones.west
-          && 'boolean' === typeof zones.south;
+        var zonesValid = 'object' === typeof zones && 'boolean' === typeof zones.north && 'boolean' === typeof zones.paca && 'boolean' === typeof zones.west && 'boolean' === typeof zones.south;
 
         if (!zonesValid) {
           return $q.reject('Invalid zones');
@@ -118,7 +117,8 @@ angular.module('tempoApp')
         },
         'getYear': function (zone, date) {
           return fetch(zone, date.format('YYYY'));
-        }
+        },
+        'save': save
       };
     }
   ]);

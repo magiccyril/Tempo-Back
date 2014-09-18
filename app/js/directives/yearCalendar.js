@@ -1,8 +1,7 @@
 'use strict';
 
-angular.module('tempoApp')
-  .constant('calendarConfig', {})
-  .directive('calendar', [function() {
+angular.module('tempoAdminApp')
+  .directive('yearcalendar', [function() {
     return {
       link: function (scope) {
         function getCalendar(inputMomentDate) {
@@ -51,7 +50,7 @@ angular.module('tempoApp')
         events:'=ngModel',
         onDayClick: '=ngClick'
       },
-      templateUrl: '/js/directives/calendar.html',
+      templateUrl: '/js/directives/yearCalendar.html',
       transclude: true
     };
   }]);
