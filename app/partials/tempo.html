@@ -1,3 +1,8 @@
-<h2>Tempo</h2>
-
-<yearcalendar ng-model="data" date="date"></yearcalendar>
+<div class="row" id="page-tempo">
+  <h3 class="small-12 columns">
+    <a href ng-click="changeYear(date.clone().subtract(1, 'year'))">&lt;</a>
+    {{ date.format('YYYY') }} - {{ date.clone().add(1, 'year').format('YYYY') }}
+    <a href ng-click="changeYear(date.clone().add(1, 'year'))">&gt;</a>
+  </h3>
+  <tempocalendar ng-model="data" ng-click="onCalendarDayClick" divona-date="date" class="small-12 columns"></tempocalendar>
+</div>

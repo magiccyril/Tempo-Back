@@ -17,13 +17,6 @@ angular
     'divonaForecast',
     'divonaTempo'
   ])
-  .config(['$httpProvider', function ($httpProvider) {
-    //Reset headers to avoid OPTIONS request (aka preflight)
-    $httpProvider.defaults.headers.common = {};
-    $httpProvider.defaults.headers.post = {};
-    $httpProvider.defaults.headers.put = {};
-    $httpProvider.defaults.headers.patch = {};
-  }])
   .config(['$routeProvider', function($routeProvider) {
     $routeProvider.
       when('/home', {

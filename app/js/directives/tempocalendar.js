@@ -1,17 +1,17 @@
 'use strict';
 
 angular.module('tempoAdminApp')
-  .directive('yearcalendar', [function() {
+  .directive('tempocalendar', [function() {
     return {
       link: function (scope) {
         function getCalendar(inputMomentDate) {
-          var calendarFirstDate = moment(inputMomentDate).startOf('year');
+          var calendarFirstDate = moment(inputMomentDate).startOf('month');
           var date = calendarFirstDate.clone();
 
           var calendar = [];
           for (var i = 0; i < 12; i++) {
             calendar[i] = {
-              'format': date.format('MMM'),
+              'format': date.format('MMM YY'),
               'days': []
             };
 
@@ -20,9 +20,12 @@ angular.module('tempoAdminApp')
             var nbOfDayInMonth = lastDayOfMonth.diff(firstDayOfMonth, 'days') + 1;
 
             for (var j = 0; j < nbOfDayInMonth; j++) {
-              var data = '';
+              var data = {
+                raw: 'undefined',
+                formated: '-'
+              };
               if (scope.events[date.format('YYYY-MM-DD')]) {
-                data = scope.events[date.format('YYYY-MM-DD')].raw;
+                data = scope.events[date.format('YYYY-MM-DD')];
               }
 
               calendar[i].days.push({
@@ -36,6 +39,11 @@ angular.module('tempoAdminApp')
           return calendar;
         }
 
+        scope.days = [];
+        for (var i = 0; i < 31; i++) {
+          scope.days.push(i + 1);
+        }
+
         scope.$watch('date', function() {
           scope.calendar = getCalendar(scope.date);
         });
@@ -46,11 +54,11 @@ angular.module('tempoAdminApp')
       },
       restrict: 'E',
       scope: {
-        date: '=date',
+        date: '=divonaDate',
         events:'=ngModel',
         onDayClick: '=ngClick'
       },
-      templateUrl: '/js/directives/yearCalendar.html',
+      templateUrl: '/js/directives/tempocalendar.html',
       transclude: true
     };
   }]);

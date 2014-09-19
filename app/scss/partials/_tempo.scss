@@ -1,0 +1,11 @@
+#page-tempo {
+  th, td {
+    text-align: center;
+  }
+  th { background: $calendar-header; }
+  td { background: $calendar-off; }
+  td.undefined { background: $calendar-empty; }
+  td.blue { background: $blue; }
+  td.white { background: $white; }
+  td.red { background: $red; }
+}

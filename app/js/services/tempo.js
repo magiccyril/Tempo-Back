@@ -40,21 +40,27 @@ angular
         }
       };
 
-      var getCounter = function () {
-        var fromDate = moment();
-        fromDate.month(TEMPO_API_FROM_MONTH - 1);
-        fromDate.date(TEMPO_API_FROM_DAY);
-        fromDate.subtract(1, 'year');
+      var getStartDate = function () {
+        var date = moment();
+        date.month(TEMPO_API_FROM_MONTH - 1);
+        date.date(TEMPO_API_FROM_DAY);
+        date.subtract(1, 'year');
 
         if (moment().month() + 1 >= TEMPO_API_FROM_MONTH) {
-          fromDate.add(1, 'year');
+          date.add(1, 'year');
         }
+
+        return date;
+      };
+
+      var getCounter = function () {
+        var fromDate = getStartDate();
 
         if (moment().isLeapYear()) {
           TEMPO_API_COUNT_BLUE = TEMPO_API_COUNT_BLUE + 1;
         }
 
-        return $http.get(TEMPO_API_URL + '/tempo/count/' + fromDate.format('YYYY-MM-DD'))
+        return $http.get(TEMPO_API_URL + '/tempo/count/' + fromDate.format('YYYY-MM-DD') + '?' + moment().unix())
           .then(function (response) {
             return {
               'blue': TEMPO_API_COUNT_BLUE - response.data.blue,
@@ -78,14 +84,18 @@ angular
         return formatedData;
       };
 
-      var fetch = function (date) {
-        if (cache[date]) {
+      var fetch = function (date, noCache) {
+        if (angular.isUndefined(noCache)) {
+          noCache = false;
+        }
+
+        if (cache[date] && !noCache) {
           var deferred = $q.defer();
           deferred.resolve(cache[date]);
           return deferred.promise;
         }
 
-        return $http.get(TEMPO_API_URL + '/tempo/' + date)
+        return $http.get(TEMPO_API_URL + '/tempo/' + date + '?' + moment().unix())
           .then(function (response) {
             cache[date] = formatData(response.data);
             return cache[date];
@@ -93,6 +103,10 @@ angular
       };
 
       var save = function (apikey, date, color) {
+        if (!moment.isMoment(date)) {
+          date = moment(date);
+        }
+
         if (!date.isValid()) {
           return $q.reject('Invalid date');
         }
@@ -111,15 +125,30 @@ angular
         return $http.post(TEMPO_API_URL + '/tempo?apikey=' + apikey, data);
       };
 
+      var remove = function (apikey, date) {
+        if (!moment.isMoment(date)) {
+          date = moment(date);
+        }
+
+        if (!date.isValid()) {
+          return $q.reject('Invalid date');
+        }
+
+        return $http.delete(TEMPO_API_URL + '/tempo/' + date.format('YYYY-MM-DD') + '?apikey=' + apikey);
+      };
+
       return {
+        'formatColor': formatColor,
+        'getStartDate': getStartDate,
         'getCounter': getCounter,
-        'getMonth': function (date) {
-          return fetch(date.format('YYYY-MM'));
+        'getMonth': function (date, noCache) {
+          return fetch(date.format('YYYY-MM'), noCache);
         },
-        'getYear': function (date) {
-          return fetch(date.format('YYYY'));
+        'getYear': function (date, noCache) {
+          return fetch(date.format('YYYY'), noCache);
         },
-        'save': save
+        'save': save,
+        'delete': remove
       };
     }
   ]);

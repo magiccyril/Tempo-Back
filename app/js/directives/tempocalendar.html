@@ -1,0 +1,15 @@
+<table>
+  <tr>
+    <th>Jours</td>
+    <th ng-repeat="month in calendar">{{ month.format }}</th>
+  </tr>
+  <tr ng-repeat="(dayIndex, day) in days">
+    <th>{{ day }}</th>
+    <td ng-repeat="month in calendar"
+      ng-class="month.days[dayIndex].data.raw"
+      ng-click="onDayClick(month.days[dayIndex])"
+      title="{{ month.days[dayIndex].data.formated }}">
+      {{ month.days[dayIndex].date.format('ddd') }}
+    </td>
+  </tr>
+</table>
