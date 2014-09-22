@@ -26,7 +26,7 @@ angular.module('tempoAdminApp')
             $scope.data = angular.extend(dataFirstPart, dataSecondPart);
           });
         });
-      }
+      };
 
       $scope.changeYear = function (date) {
         $scope.date = date;
@@ -54,7 +54,9 @@ angular.module('tempoAdminApp')
             nextColor = 'blue';
         }
 
-        if (!$scope.utils.apikey) {
+        var apikey = $scope.utils.apikey;
+        if (!apikey) {
+          alert('Please enter APIKEY');
           return;
         }
 
@@ -62,13 +64,13 @@ angular.module('tempoAdminApp')
 
         sendToApiDelay[day.date.unix()] = $timeout(function() {
           if ('undefined' !== nextColor) {
-            Tempo.save($scope.utils.apikey, day.date, nextColor).then(function (data) {
+            Tempo.save(apikey, day.date, nextColor).then(function () {
               day.data.raw      = nextColor;
               day.data.formated = Tempo.formatColor(day.data.raw);
             });
           }
           else {
-            Tempo.delete($scope.utils.apikey, day.date).then(function (data) {
+            Tempo.delete(apikey, day.date).then(function () {
               day.data.raw      = 'undefined';
               day.data.formated = '-';
             });

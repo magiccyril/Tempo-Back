@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('tempoAdminApp')
-  .directive('tempocalendar', [function() {
+  .directive('ejpcalendar', [function() {
     return {
       link: function (scope) {
         function getCalendar(inputMomentDate) {
@@ -21,12 +21,17 @@ angular.module('tempoAdminApp')
 
             for (var j = 0; j < nbOfDayInMonth; j++) {
               var data = {
-                raw: 'undefined',
-                formated: '-'
+                north: undefined,
+                paca: undefined,
+                west: undefined,
+                south: undefined
               };
 
-              if (scope.events[date.format('YYYY-MM-DD')]) {
-                data = scope.events[date.format('YYYY-MM-DD')];
+              if (scope.events && scope.events[date.format('YYYY-MM-DD')]) {
+                data.north = scope.events[date.format('YYYY-MM-DD')].north.raw;
+                data.paca = scope.events[date.format('YYYY-MM-DD')].paca.raw;
+                data.west = scope.events[date.format('YYYY-MM-DD')].west.raw;
+                data.south = scope.events[date.format('YYYY-MM-DD')].south.raw;
               }
 
               calendar[i].days.push({
@@ -57,9 +62,10 @@ angular.module('tempoAdminApp')
       scope: {
         date: '=divonaDate',
         events:'=ngModel',
-        onDayClick: '=ngClick'
+        onDayDblClick: '=ngDblclick',
+        onDayZoneClick: '=ngClick'
       },
-      templateUrl: '/js/directives/tempocalendar.html',
+      templateUrl: '/js/directives/ejpcalendar.html',
       transclude: true
     };
   }]);

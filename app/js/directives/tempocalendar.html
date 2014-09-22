@@ -1,7 +1,7 @@
 <table>
   <tr>
-    <th>Jours</td>
-    <th ng-repeat="month in calendar">{{ month.format }}</th>
+    <th></td>
+    <th ng-repeat="month in calendar"><span ng-bind-html="month.format"></span></th>
   </tr>
   <tr ng-repeat="(dayIndex, day) in days">
     <th>{{ day }}</th>
