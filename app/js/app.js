@@ -20,15 +20,15 @@ angular
   .config(['$routeProvider', function($routeProvider) {
     $routeProvider.
       when('/home', {
-        templateUrl: 'partials/home.html',
+        templateUrl: 'views/home.html',
         controller: 'HomeCtrl'
       }).
       when('/tempo', {
-        templateUrl: 'partials/tempo.html',
+        templateUrl: 'views/tempo.html',
         controller: 'TempoCtrl'
       }).
       when('/ejp', {
-        templateUrl: 'partials/ejp.html',
+        templateUrl: 'views/ejp.html',
         controller: 'EjpCtrl'
       }).
       otherwise({

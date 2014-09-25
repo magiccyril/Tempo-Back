@@ -65,7 +65,7 @@ angular.module('tempoAdminApp')
         onDayDblClick: '=ngDblclick',
         onDayZoneClick: '=ngClick'
       },
-      templateUrl: '/js/directives/ejpcalendar.html',
+      templateUrl: 'views/directives/ejpcalendar.html',
       transclude: true
     };
   }]);

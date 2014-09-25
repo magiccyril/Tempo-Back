@@ -59,7 +59,7 @@ angular.module('tempoAdminApp')
         events:'=ngModel',
         onDayClick: '=ngClick'
       },
-      templateUrl: '/js/directives/tempocalendar.html',
+      templateUrl: 'views/directives/tempocalendar.html',
       transclude: true
     };
   }]);
